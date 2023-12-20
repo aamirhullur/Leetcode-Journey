@@ -1,11 +1,17 @@
 class Solution(object):
     def twoSum(self, nums, target):
-        for i in range(len(nums)):
-            for j in range(len(nums)):
-                if i!=j:
-                    currSum = nums[i] + nums[j] 
-                    if currSum == target:
-                        return[i,j]
-                    else:
-                        continue
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        dictionary = {}
+
+        for i, num in enumerate(nums):
+            # print(dictionary)
+            c = target - num
+            if c in dictionary:
+                return [dictionary[c],i]
+            dictionary[num] = i
+                
         
