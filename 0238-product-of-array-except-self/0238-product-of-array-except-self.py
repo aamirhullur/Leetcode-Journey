@@ -17,14 +17,22 @@ class Solution(object):
 #             res[i] = left*right
 
 #         return(res)
-        length=len(nums)
-        sol=[1]*length
-        pre = 1
-        post = 1
+    
+
+        length = len(nums)
+        answer = [0]*length
+
+        # left product for each element
+        left = 1
         for i in range(length):
-            sol[i] *= pre
-            pre = pre*nums[i]
-            sol[length-i-1] *= post
-            post = post*nums[length-i-1]
-        return(sol)
+            answer[i] = left
+            left *= nums[i]
+
+        # right product for each element
+        right = 1
+        for i in range(length-1, -1, -1):
+            answer[i] *= right
+            right *= nums[i]
+
+        return answer
         
