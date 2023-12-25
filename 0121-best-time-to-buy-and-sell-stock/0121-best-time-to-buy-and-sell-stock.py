@@ -11,5 +11,3 @@ class Solution(object):
             elif price - minPrice > maxProfit:
                 maxProfit = price - minPrice
         return maxProfit
-        
-            
