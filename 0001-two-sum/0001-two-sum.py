@@ -5,13 +5,10 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        dictionary = {}
-
-        for i, num in enumerate(nums):
-            # print(dictionary)
-            c = target - num
-            if c in dictionary:
-                return [dictionary[c],i]
-            dictionary[num] = i
-                
-        
+        res = []
+        for i in range(len(nums)):
+            for j in range(i+1,len(nums)):
+                if nums[i] + nums[j] == target:
+                    res.append(i)
+                    res.append(j)
+        return res
