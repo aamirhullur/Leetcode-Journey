@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install supabase-py
+          pip install supabase
           # No need to install 're' or 'subprocess' as they are part of the standard library
 
       - name: Run Sync Script
