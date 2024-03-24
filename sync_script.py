@@ -81,7 +81,7 @@ def parse_and_update(directory):
                         first_lines = ''.join([next(readme_file) for _ in range(2)])
                         difficulty = extract_difficulty(first_lines)
 
-                commit_date = get_last_commit_date(root)
+                commit_date = get_last_commit_date(problem_name)
                 # print(f"{problem_name} - Committed on: {commit_date}")
 
                 # Prepare data for Supabase
