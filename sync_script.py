@@ -42,6 +42,17 @@ def get_last_commit_date(file_path):
     
     # git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {file_path}"
     print(os.getcwd())
+    
+    commit_date_str = subprocess.check_output(['git', 'log', '-1', '--format=%cd', "--date=format'%Y-%m-%d %H:%M:%S'" , file_path]).decode('utf-8').strip()
+    commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
+    print(f'commit_date:{commit_date}')
+
+    new_path = os.path.join('/home/runner/work/Leetcode-Journey/Leetcode-Journey', file_path[1:])
+    new_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {new_path}"
+    process1 = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    output1 = process.stdout.strip()
+    print(f'output1 : {output1}')
+    
     git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' '0206-reverse-linked-list'"
     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = process.stdout.strip()
