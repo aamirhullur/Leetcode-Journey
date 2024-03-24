@@ -68,7 +68,7 @@ def parse_and_update(directory):
             
             if language:  # Only proceed if the file is a Python or SQL file
                 problem_name = root.split('/')[-1]
-                # print(f'Processing {problem_name}')
+                print(f'Processing {problem_name}')
                 file_name = file[:4]
                 readme_path = os.path.join(root, 'README.md')
                 difficulty = 'Unknown'  # Default value in case README.md does not exist or difficulty can't be determined
