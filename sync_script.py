@@ -2,7 +2,8 @@ import os
 from datetime import datetime
 from supabase import create_client
 import re
-import subprocess import run
+import subprocess
+from subprocess import run
 
 # Supabase connection details (use environment variables for security)
 SUPABASE_URL = os.environ.get('SUPABASE_URL')
