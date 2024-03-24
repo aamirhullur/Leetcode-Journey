@@ -57,10 +57,11 @@ def get_last_commit_date(file_path):
 # Function to parse directory and update database
 
 def parse_and_update(directory):
-    language = None
+    
     for root, dirs, files in os.walk(directory):
         # print(f'root : {root}, dirs: {dirs},files: {files}')  
         for file in files:
+            language = None
             print(f'file:{file}')
             if file == 'sync_script.py' or 'sync_leetcode_data.yml':
                 break
