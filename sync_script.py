@@ -49,8 +49,8 @@ def get_last_commit_date(file_path):
 
     new_path = os.path.join('/home/runner/work/Leetcode-Journey/Leetcode-Journey/', file_path)
     new_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {new_path}"
-    process1 = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    output1 = process.stdout.strip()
+    process1 = subprocess.run(new_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    output1 = process1.stdout.strip()
     print(f'output1 : {output1}')
     
     git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' '0206-reverse-linked-list'"
