@@ -36,10 +36,11 @@ def get_last_commit_date(file_path):
     # commit_date_str = subprocess.check_output(['git', 'log', '-1', '--format=%cd', file_path]).decode('utf-8').strip()
     # Parse the string into a datetime object and format it
     # commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
-    date_format = "%Y-%m-%d %H:%M:%S"
-    git_command = ['git', 'log', '-1', '--format=%cd', '--date=format:' + date_format, file_path]
-    # git_command = f"git log -1 --pretty=format:'%H - %an (committed on %ci)' {file_path}"
-    process = subprocess.run(git_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    # date_format = "%Y-%m-%d %H:%M:%S"
+    # git log -1 --pretty=format:%cd --date=format:"%Y-%m-%d %H:%M:%S" '0206-reverse-linked-list'
+    # git_command = ['git', 'log', '-1', '--format=%cd', '--date=format:' + date_format, file_path]
+    git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {file_path}"
+    process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = process.stdout.strip()
     print(f'output - {output}')
     return output
