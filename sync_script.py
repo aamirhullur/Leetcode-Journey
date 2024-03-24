@@ -29,52 +29,33 @@ def extract_difficulty(readme_contents):
         # If the difficulty level is not found, return 'Unknown'
         return 'Unknown'
 
-def get_last_commit_date(file_path):
-    
-    # Get the last commit date as a string
-    # print('file_path:', file_path)
-    # commit_date_str = subprocess.check_output(['git', 'log', '-1', '--format=%cd', file_path]).decode('utf-8').strip()
-    # Parse the string into a datetime object and format it
-    # commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
-    # date_format = "%Y-%m-%d %H:%M:%S"
-    # git log -1 --pretty=format:%cd --date=format:"%Y-%m-%d %H:%M:%S" '0206-reverse-linked-list'
-    # git_command = ['git', 'log', '-1', '--format=%cd', '--date=format:' + date_format, file_path]
-    
-    # git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {file_path}"
-    # print(os.listdir(os.getcwd()))
-    
-    # commit_date_str = subprocess.check_output(['git', 'log', '-1', '--format=%cd', "--date=format'%Y-%m-%d %H:%M:%S'" , file_path]).decode('utf-8').strip()
-    # commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
-    # print(f'commit_date:{commit_date}')
+# def get_last_commit_date(file_path):
+#     git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {os.path.abspath(file_path)}"
+#     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+#     output = process.stdout.strip()
+#     print(f'output - {output}')
+#     return output
 
-    # new_path = os.path.join('/home/runner/work/Leetcode-Journey/Leetcode-Journey/', file_path)
-    # new_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {new_path}"
-    # process1 = subprocess.run(new_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    # output1 = process1.stdout.strip()
-    # print(f'output1 : {output1}')
-    
-    # git_command = f"git log '0001-two-sum'"
-    # print(os.path.abspath(file_path))
-    git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {os.path.abspath(file_path)}"
+def get_last_commit_date(file_path):
+    absolute_path = os.path.abspath(file_path)
+
+    # Check if file exists
+    if not os.path.exists(absolute_path):
+        print(f"Error: File '{absolute_path}' does not exist.")
+        return None
+
+    # Check if file is untracked
+    if not subprocess.run(["git", "ls-files", absolute_path], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0:
+        print(f"Error: File '{absolute_path}' is not tracked in the Git repository.")
+        return None
+
+    git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' --force-with-lease {absolute_path}"
     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = process.stdout.strip()
     print(f'output - {output}')
     return output
-
-# def get_commit_date(filename):
-#   print(f"Getting commit date for {filename}")
-#   print(os.getcwd())
-#   git_command = f"git log -1 --pretty=format:'%H - %an (committed on %ci)' {file}"
-#   process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-#   output = process.stdout.strip()
-#   if output:
-#     return output
-#   else:
-#     print(f"No commit found for {filename}")
-#     return None
-  
-
 # Function to parse directory and update database
+
 def parse_and_update(directory):
     for root, dirs, files in os.walk(directory):
         # print(f'root : {root}, dirs: {dirs},files: {files}')  
