@@ -47,7 +47,7 @@ def get_last_commit_date(file_path):
     commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
     print(f'commit_date:{commit_date}')
 
-    new_path = os.path.join('/home/runner/work/Leetcode-Journey/Leetcode-Journey', file_path[1:])
+    new_path = os.path.join('/home/runner/work/Leetcode-Journey/Leetcode-Journey/', file_path)
     new_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {new_path}"
     process1 = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output1 = process.stdout.strip()
@@ -96,7 +96,7 @@ def parse_and_update(directory):
                         first_lines = ''.join([next(readme_file) for _ in range(2)])
                         difficulty = extract_difficulty(first_lines)
 
-                commit_date = get_last_commit_date(root)
+                commit_date = get_last_commit_date(problem_name)
                 # print(f"{problem_name} - Committed on: {commit_date}")
 
                 # Prepare data for Supabase
