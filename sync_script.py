@@ -48,7 +48,7 @@ def get_last_commit_date(file_path):
     if not subprocess.run(["git", "ls-files", absolute_path], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0:
         print(f"Error: File '{absolute_path}' is not tracked in the Git repository.")
         return None
-
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' --force-with-lease {absolute_path}"
     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = process.stdout.strip()
