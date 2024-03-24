@@ -41,7 +41,7 @@ def get_last_commit_date(file_path):
     # git_command = ['git', 'log', '-1', '--format=%cd', '--date=format:' + date_format, file_path]
     
     # git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {file_path}"
-    print(os.getcwd())
+    print(os.listdir(os.getcwd()))
     
     # commit_date_str = subprocess.check_output(['git', 'log', '-1', '--format=%cd', "--date=format'%Y-%m-%d %H:%M:%S'" , file_path]).decode('utf-8').strip()
     # commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
