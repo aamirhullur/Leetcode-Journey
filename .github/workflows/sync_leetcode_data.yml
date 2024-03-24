@@ -1,0 +1,30 @@
+name: Sync LeetCode Data to Supabase
+
+on:
+  push:
+    paths:
+      - '**' # This triggers the workflow for any change in any file. Adapt if needed.
+
+jobs:
+  update-database:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12' # Specify the Python version you are using
+
+      - name: Install Dependencies
+        run: |
+          pip install supabase-py
+          # No need to install 're' or 'subprocess' as they are part of the standard library
+
+      - name: Run Sync Script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python ./sync_script.py
