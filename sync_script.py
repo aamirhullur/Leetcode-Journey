@@ -5,8 +5,8 @@ import re
 import subprocess
 
 # Supabase connection details (use environment variables for security)
-DATABASE_URL = os.environ.get('SUPABASE_URL')
-DATABASE_KEY = os.environ.get('SUPABASE_KEY')  # Use the appropriate key for this approach
+SUPABASE_URL = os.environ.get('SUPABASE_URL')
+SUPABASE_KEY = os.environ.get('SUPABASE_KEY')  # Use the appropriate key for this approach
 
 # Initialize Supabase client
 supabase = create_client(DATABASE_URL, DATABASE_KEY)
