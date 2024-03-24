@@ -52,8 +52,10 @@ def get_last_commit_date(file_path):
     # process1 = subprocess.run(new_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     # output1 = process1.stdout.strip()
     # print(f'output1 : {output1}')
-    git_command = f"git log '0001-two-sum'"
-    # git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' '0206-reverse-linked-list'"
+    
+    # git_command = f"git log '0001-two-sum'"
+    print(os.path.abspath(file_path))
+    git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {file_path}"
     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = process.stdout.strip()
     print(f'output - {output}')
