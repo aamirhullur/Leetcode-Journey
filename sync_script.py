@@ -41,7 +41,8 @@ def get_last_commit_date(file_path):
     # git_command = ['git', 'log', '-1', '--format=%cd', '--date=format:' + date_format, file_path]
     
     # git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {file_path}"
-    git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' 'Leetcode-Journey/0206-reverse-linked-list'"
+    print(os.getcwd())
+    git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' '/0206-reverse-linked-list'"
     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     output = process.stdout.strip()
     print(f'output - {output}')
@@ -63,7 +64,7 @@ def get_last_commit_date(file_path):
 # Function to parse directory and update database
 def parse_and_update(directory):
     for root, dirs, files in os.walk(directory):
-        # print(f'{files}, root: {root}')  
+        print(f'root : {root}, dirs: {dirs},files: {files}')  
         for file in files:
             language = None
             if file.endswith('.py'):
