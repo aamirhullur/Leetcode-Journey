@@ -30,8 +30,9 @@ def extract_difficulty(readme_contents):
         return 'Unknown'
 
 def get_last_commit_date(file_path):
+    
     # Get the last commit date as a string
-    # print('file_path:', file_path)
+    print('file_path:', file_path)
     # commit_date_str = subprocess.check_output(['git', 'log', '-1', '--format=%cd', file_path]).decode('utf-8').strip()
     # Parse the string into a datetime object and format it
     # commit_date = datetime.strptime(commit_date_str, '%a %b %d %H:%M:%S %Y %z').strftime('%Y-%m-%d %H:%M:%S')
