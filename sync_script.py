@@ -62,8 +62,8 @@ def parse_and_update(directory):
         # print(f'root : {root}, dirs: {dirs},files: {files}')  
         for file in files:
             print(f'file:{file}')
-            if file = 'sync_script.py':
-                pass
+            if file == 'sync_script.py':
+                continue
             if file.endswith('.py'):
                 language = 'Python'
             elif file.endswith('.sql'):
