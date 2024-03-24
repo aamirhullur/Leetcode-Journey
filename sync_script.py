@@ -9,7 +9,7 @@ SUPABASE_URL = os.environ.get('SUPABASE_URL')
 SUPABASE_KEY = os.environ.get('SUPABASE_KEY')  # Use the appropriate key for this approach
 
 # Initialize Supabase client
-supabase = create_client(DATABASE_URL, DATABASE_KEY)
+supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 # table_name = "leetcode_questions"  # Replace 'your_table_name' with your actual table name
 # data = supabase.table(table_name).select('*').execute()
