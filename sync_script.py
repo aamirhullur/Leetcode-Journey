@@ -63,7 +63,7 @@ def parse_and_update(directory):
         for file in files:
             language = None
             print(f'file:{file}')
-            if file == 'sync_script.py' or 'sync_leetcode_data.yml':
+            if file == 'sync_script.py' or file == 'sync_leetcode_data.yml':
                 continue
             if file.endswith('.py'):
                 language = 'Python'
