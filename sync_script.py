@@ -50,3 +50,5 @@ def parse_and_update(directory):
                         print(f"Error upserting data for {problem_name}: {response['error']}")
                 else:
                     print(f"No update required for {problem_name}.")
+
+parse_and_update('.') 
