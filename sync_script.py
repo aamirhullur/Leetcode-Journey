@@ -18,13 +18,14 @@ def should_update(problem_name, commit_date):
     Returns True if update is needed, False otherwise.
     """
     result = supabase.table('leetcode_questions').select('commit_date').eq('question_name', problem_name).execute()
-    
+    print(result)
     # If problem not found in database, it should be added
     if not result.data:
         return True
     
     # Check if the commit date in the database matches the fetched commit date
     db_commit_date = result.data[0]['commit_date']
+    print(db_commit_date)
     if db_commit_date != commit_date:
         return True
     
@@ -95,7 +96,8 @@ def parse_and_update(directory):
                         difficulty = extract_difficulty(first_lines)
 
                 commit_date = get_last_commit_date(problem_name)
-                # print(f"{problem_name} - Committed on: {commit_date}")
+                print(f"{problem_name} - Committed on: {commit_date}")
+                
                 if should_update(problem_name, commit_date):
                 # Prepare data for Supabase
                     data = {
