@@ -1,3 +1,10 @@
+import os
+from datetime import datetime
+from supabase import create_client
+import re
+import subprocess
+from subprocess import run
+
 def should_update(problem_name, commit_date):
     """
     Checks if the database entry for problem_name needs an update based on commit_date.
