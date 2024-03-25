@@ -51,26 +51,6 @@ def get_last_commit_date(file_path):
     print(f'output - {output}')
     return output
 
-# def get_last_commit_date(file_path):
-#     absolute_path = os.path.abspath(file_path)
-
-#     # Check if file exists
-#     if not os.path.exists(absolute_path):
-#         print(f"Error: File '{absolute_path}' does not exist.")
-#         return None
-
-#     # Check if file is untracked
-#     if not subprocess.run(["git", "ls-files", absolute_path], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0:
-#         print(f"Error: File '{absolute_path}' is not tracked in the Git repository.")
-#         return None
-#     os.chdir(os.path.dirname(os.path.abspath(__file__)))
-#     git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' --force-with-lease {absolute_path}"
-#     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-#     output = process.stdout.strip()
-#     print(f'output - {output}')
-#     return output
-# Function to parse directory and update database
-
 def parse_and_update(directory):
     
     for root, dirs, files in os.walk(directory):
@@ -120,4 +100,3 @@ def parse_and_update(directory):
 
 # Run the parser and updater
 parse_and_update('.')  # If running locally specify the path, in GitHub Actions the current directory is the root of the repository.
-# parse_and_update('/Users/aamirhullur/Documents/Projects/Leetcode Project/Test/Leetcode-test')
