@@ -25,7 +25,7 @@ def should_update(problem_name, commit_date):
     
     # Check if the commit date in the database matches the fetched commit date
     db_commit_date_str = result.data[0]['commit_date']
-    db_commit_date = datetime.datetime.strptime(db_commit_date_str, "%Y-%m-%dT%H:%M:%S")
+    db_commit_date = datetime.strptime(db_commit_date_str, "%Y-%m-%dT%H:%M:%S")
     formatted_db_commit_date = db_commit_date.strftime("%Y-%m-%d %H:%M:%S")  # Format as desired
 
     print(db_commit_date)
