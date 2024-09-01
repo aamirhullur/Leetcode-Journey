@@ -12,7 +12,5 @@ class Solution(object):
         res = [[0]*n for _ in range(m)]
         
         for i in range(m):
-            # res[m]
             res[i] = original[n*i:n*(i+1)]
-            # cnt+=1
         return res
