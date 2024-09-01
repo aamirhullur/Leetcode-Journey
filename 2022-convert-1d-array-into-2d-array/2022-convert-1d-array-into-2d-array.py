@@ -9,8 +9,11 @@ class Solution(object):
         if m*n != len(original):
             return []
         
-        res = [[0]*n for _ in range(m)]
+#         res = [[0]*n for _ in range(m)]
         
-        for i in range(m):
-            res[i] = original[n*i:n*(i+1)]
-        return res
+#         for i in range(m):
+#             res[i] = original[n*i:n*(i+1)]
+#         return res
+
+        # res = [original[n*i:n*(i+1)] for i in range(m)]
+        return [original[n*i:n*(i+1)] for i in range(m)]
