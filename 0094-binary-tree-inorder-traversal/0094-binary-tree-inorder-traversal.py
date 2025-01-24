@@ -11,15 +11,31 @@ class Solution(object):
         :rtype: List[int]
         """
 
-        arr = []
+        # arr = []
 
-        def dfs(node,arr):
-            if not node:
-                return 
-            dfs(node.left,arr)
-            arr.append(node.val)
-            dfs(node.right,arr)
+        # def dfs(node):
+        #     if not node:
+        #         return 
+        #     dfs(node.left)
+        #     arr.append(node.val)
+        #     dfs(node.right)
         
-        dfs(root,arr)
+        # dfs(root)
 
+        # return arr
+
+        arr = []
+        stack = []
+
+        while root or stack:
+            if not root:
+                root = stack.pop()
+                arr.append(root.val)
+                root = root.right
+            else:
+                stack.append(root)
+                root = root.left
+                
+        
         return arr
+
