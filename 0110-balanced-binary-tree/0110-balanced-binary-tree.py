@@ -10,7 +10,7 @@ class Solution(object):
         :type root: Optional[TreeNode]
         :rtype: bool
         """
-        self.tmp = -1
+        self.tmp = True
         def find_len(node):
             if not node:
                 return 0
@@ -19,13 +19,10 @@ class Solution(object):
             right = find_len(node.right)
             
             if abs(left-right) > 1:
-                self.tmp += 1
+                self.tmp = False
             
             return 1 + max(left,right)
             
         
         find_len(root)
-        if self.tmp is not -1:
-            return False
-        else:
-            return True
+        return self.tmp
