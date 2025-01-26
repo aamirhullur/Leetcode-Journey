@@ -4,14 +4,18 @@ class Solution(object):
         :type strs: List[str]
         :rtype: List[List[str]]
         """
-        temp = {}
 
-        for i,r in enumerate(strs):
-            r_sorted = ''.join(sorted(r))
-            if r_sorted in temp:
-                temp[r_sorted].append(r)
+        
+        tmp = {}
+        for i, r in enumerate(strs):
+            res = [0] * 26
+            for j in r:
+                res[ord(j) - ord('a')] += 1
+            res = ''.join(str(res))
+            if res in tmp:
+                tmp[res].append(r)
             else:
-                temp[r_sorted] = [r]
-        sorted_lists = [sorted(value) for value in temp.values()]
-        result = sorted(sorted_lists, key=len)
-        return(result)
+                tmp[res] = [r]
+
+        return(tmp.values())
+            
