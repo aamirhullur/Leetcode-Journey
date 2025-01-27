@@ -5,11 +5,14 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        hashmap = defaultdict(int)
+        
+        L,R = 0, len(numbers)-1
 
-        for i in range(0,len(numbers)):
-            if target-numbers[i] in hashmap:
-                return [hashmap[target-numbers[i]]+1 ,i+1]
+        while L < R:
+            if numbers[L]+ numbers[R] > target:
+                R -= 1
+            elif numbers[L] + numbers[R] < target:
+                L += 1
             else:
-                hashmap[numbers[i]] = i
+                return [L+1,R+1]
         
