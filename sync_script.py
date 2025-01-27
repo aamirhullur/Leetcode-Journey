@@ -8,7 +8,8 @@ from subprocess import run
 # Supabase connection details (use environment variables for security)
 SUPABASE_URL = os.environ.get('SUPABASE_URL')
 SUPABASE_KEY = os.environ.get('S_KEY')  # Use the appropriate key for this approach
-
+print('SUPABASE_URL')
+print('SUPABASE_KEY')
 # Initialize Supabase client
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
