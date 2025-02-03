@@ -5,14 +5,29 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        cnt = 0
-        for i in range(0,len(nums)):
-            if nums[i] == target:
-                return(i)
+        L,R = 0, len(nums)-1
+
+        while L<R:
+            m = (L+R)//2
+
+            if nums[m] > nums[R]:
+                L = m+1
             else:
-                cnt+=1
-                continue
+                R = m
+
+        pivot = L
+        if target <= nums[len(nums)-1]:
+            L,R = pivot, len(nums)-1
+        else:
+            L,R = 0, pivot-1
+        while L<=R:
+            m = (L+R)//2
+
+            if target > nums[m]:
+                L = m+1
+            elif target < nums[m]:
+                R = m-1
+            else:
+                return m
         
-        if cnt>=len(nums):
-            return(-1)
-        
+        return -1
