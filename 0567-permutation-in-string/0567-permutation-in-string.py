@@ -6,24 +6,29 @@ class Solution(object):
         :type s2: str
         :rtype: bool
         """
-        hmap = {}
-        for i in s1:
-            if i in hmap:
-                hmap[i] +=1
-            else:
-                hmap[i] =1
-        # l = 0
+        # hmap = {}
+        # for i in s1:
+        #     if i in hmap:
+        #         hmap[i] +=1
+        #     else:
+        #         hmap[i] =1
+        # # l = 0
 
-        for l in range(0,len(s2)-len(s1)+1):
-            hm = {}
-            while l < len(s2) and s2[l] in s1:
-                if s2[l] in hm:
-                    hm[s2[l]] +=1
-                else:
-                    hm[s2[l]] = 1
-                if hm == hmap:
-                    return True
-                elif hm[s2[l]] > hmap[s2[l]]:
-                    break
-                l+=1
-        return False
+        # for l in range(0,len(s2)-len(s1)+1):
+        #     hm = {}
+        #     while l < len(s2) and s2[l] in s1:
+        #         if s2[l] in hm:
+        #             hm[s2[l]] +=1
+        #         else:
+        #             hm[s2[l]] = 1
+        #         if hm == hmap:
+        #             return True
+        #         elif hm[s2[l]] > hmap[s2[l]]:
+        #             break
+        #         l+=1
+        # return False
+
+        for i in range(0,len(s2)-len(s1)+1):
+            if sorted(s2[i:i+len(s1)]) == sorted(s1):
+                return True
+        return False   
