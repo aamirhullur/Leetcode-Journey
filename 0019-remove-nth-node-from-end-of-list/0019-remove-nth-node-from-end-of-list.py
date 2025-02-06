@@ -28,20 +28,40 @@ class Solution(object):
 
         # return head
 
-        k = 0 
-        curr = head
-        while curr:
-            k+=1
-            curr = curr.next
+        # k = 0 
+        # curr = head
+        # while curr:
+        #     k+=1
+        #     curr = curr.next
 
-        tar = k -n -1
-        if tar < 0:
+        # tar = k -n -1
+        # if tar < 0:
+        #     return head.next
+        # curr = head
+        # while tar > 0:
+        #     curr = curr.next
+        #     tar -=1
+
+        # curr.next = curr.next.next
+
+        # return head
+
+        # if not head.next:
+        #     return head.next
+
+        curr1, curr2 = head,head
+        while curr2 and n>0:
+            curr2 = curr2.next
+            n-=1
+
+        while curr2 and curr2.next:
+            curr2 = curr2.next
+            curr1 = curr1.next
+        
+        if curr2:
+            curr1.next = curr1.next.next
+        else:
             return head.next
-        curr = head
-        while tar > 0:
-            curr = curr.next
-            tar -=1
-
-        curr.next = curr.next.next
 
         return head
+
