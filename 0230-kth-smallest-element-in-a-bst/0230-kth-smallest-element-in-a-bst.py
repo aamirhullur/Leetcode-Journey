@@ -11,15 +11,19 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
-        arr = []
+        # arr = []
+        self.res = float('inf')
+        self.cnt = 0
         def inorder(node):
             if not node:
                 return
             
             inorder(node.left)
-            arr.append(node.val)
+            self.cnt += 1
+            if self.cnt==k:
+                self.res = node.val
             inorder(node.right)
         
         inorder(root)
 
-        return arr[k-1]
+        return self.res
