@@ -6,9 +6,9 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         tmp = set()
-        res = []
+        # res = []
         def bt(currSum,arr,j):
-            print(currSum, arr, res, j)
+            # print(currSum, arr, res, j)
             if currSum > target:
                 return 
             elif currSum == target:
@@ -26,8 +26,8 @@ class Solution(object):
 
         candidates.sort()
 
-        for i in range(len(candidates)):
-            bt(candidates[i],[candidates[i]],i)
+        # for i in range(len(candidates)):
+        bt(0,[],0)
         
         return [list(i) for i in tmp]
 
