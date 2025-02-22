@@ -65,6 +65,10 @@ def parse_and_update(directory):
                 language = 'Python'
             elif file.endswith('.sql'):
                 language = 'SQL'
+            elif file.endswith('.js'):
+                language = 'Javascript'
+            elif file.endswith('.ts'):
+                language = 'Typescript'
             
             if language:  # Only proceed if the file is a Python or SQL file
                 problem_name = root.split('/')[-1]
