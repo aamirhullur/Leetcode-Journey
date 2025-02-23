@@ -14,7 +14,6 @@ class Solution:
             if len(pre)==1:
                 return TreeNode(post.pop())
         
-        
             node=TreeNode(post.pop()) #3
             ind=pre.index(post[-1]) #4
         
