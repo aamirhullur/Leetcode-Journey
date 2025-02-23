@@ -5,46 +5,41 @@ import re
 import subprocess
 from subprocess import run
 
-# Supabase connection details (use environment variables for security)
+# No changes in Supabase setup
 SUPABASE_URL = os.environ.get('SUPABASE_URL')
-SUPABASE_KEY = os.environ.get('S_KEY')  # Use the appropriate key for this approach
-print('SUPABASE_URL')
-print('SUPABASE_KEY')
-# Initialize Supabase client
+SUPABASE_KEY = os.environ.get('S_KEY')
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
+# MAJOR CHANGES in should_update function
 def should_update(problem_name, commit_date):
     """
-    Checks if the database entry for problem_name needs an update based on commit_date.
-    Returns True if update is needed, False otherwise.
+    CHANGED: Now checks for exact duplicate entries (same problem_name AND commit_date)
+    instead of just checking the latest commit.
+    Returns True only if no exact duplicate exists.
     """
-    result = supabase.table('leetcode_questions').select('commit_date').eq('question_name', problem_name).execute()
-    print(result)
-    # If problem not found in database, it should be added
+    result = supabase.table('leetcode_questions')\
+        .select('*')\
+        .eq('question_name', problem_name)\
+        .execute()
+    
     if not result.data:
         return True
     
-    # Check if the commit date in the database matches the fetched commit date
-    db_commit_date_str = result.data[0]['commit_date']
-    db_commit_date = datetime.strptime(db_commit_date_str, "%Y-%m-%dT%H:%M:%S")
-    formatted_db_commit_date = db_commit_date.strftime("%Y-%m-%d %H:%M:%S")  # Format as desired
-
-    print(db_commit_date)
-    if formatted_db_commit_date != commit_date:
-        return True
+    # NEW: Check for exact commit date match
+    commit_datetime = datetime.strptime(commit_date, "%Y-%m-%d %H:%M:%S")
     
-    return False
+    for entry in result.data:
+        db_date = datetime.strptime(entry['commit_date'], "%Y-%m-%dT%H:%M:%S")
+        db_date_formatted = db_date.strftime("%Y-%m-%d %H:%M:%S")
+        
+        if db_date_formatted == commit_date:
+            # Found exact match - don't update
+            return False
+    
+    # No exact match found - should add new entry
+    return True
 
-def extract_difficulty(readme_contents):
-    # Use a regular expression to search for difficulty within the first few lines
-    match = re.search(r'<h3>(Easy|Medium|Hard)</h3>', readme_contents)
-    if match:
-        # The difficulty level is captured in the first capturing group of the regex
-        return match.group(1)
-    else:
-        # If the difficulty level is not found, return 'Unknown'
-        return 'Unknown'
-
+# No changes in get_last_commit_date function
 def get_last_commit_date(file_path):
     git_command = f"git log -1 --pretty=format:%cd --date=format:'%Y-%m-%d %H:%M:%S' {os.path.abspath(file_path)}"
     process = subprocess.run(git_command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -52,15 +47,26 @@ def get_last_commit_date(file_path):
     print(f'output - {output}')
     return output
 
+# No changes in extract_difficulty function
+def extract_difficulty(readme_contents):
+    match = re.search(r'<h3>(Easy|Medium|Hard)</h3>', readme_contents)
+    if match:
+        return match.group(1)
+    else:
+        return 'Unknown'
+
+# CHANGES in parse_and_update function
 def parse_and_update(directory):
-    
     for root, dirs, files in os.walk(directory):
-        # print(f'root : {root}, dirs: {dirs},files: {files}')  
         for file in files:
             language = None
             print(f'file:{file}')
+            
+            # No changes in file filtering
             if file == 'sync_script.py' or file == 'sync_leetcode_data.yml':
                 continue
+            
+            # No changes in language detection
             if file.endswith('.py'):
                 language = 'Python'
             elif file.endswith('.sql'):
@@ -70,24 +76,24 @@ def parse_and_update(directory):
             elif file.endswith('.ts'):
                 language = 'Typescript'
             
-            if language:  # Only proceed if the file is a Python or SQL file
+            if language:
                 problem_name = root.split('/')[-1]
                 print(f'Processing {problem_name}')
                 file_name = file[:4]
                 readme_path = os.path.join(root, 'README.md')
-                difficulty = 'Unknown'  # Default value in case README.md does not exist or difficulty can't be determined
+                difficulty = 'Unknown'
 
                 if os.path.isfile(readme_path):
                     with open(readme_path, 'r') as readme_file:
-                # Read the first few lines where the difficulty is expected to be
                         first_lines = ''.join([next(readme_file) for _ in range(2)])
                         difficulty = extract_difficulty(first_lines)
 
-                commit_date = get_last_commit_date(problem_name)
+                # CHANGED: Now getting commit date for the specific file
+                commit_date = get_last_commit_date(os.path.join(root, file))
                 print(f"{problem_name} - Committed on: {commit_date}")
                 
                 if should_update(problem_name, commit_date):
-                # Prepare data for Supabase
+                    # No changes in data preparation
                     data = {
                         'question_name': problem_name,
                         'file_name': file_name,
@@ -96,12 +102,13 @@ def parse_and_update(directory):
                         'difficulty': difficulty,
                         'language': language,
                     }
-
-                ## Use Supabase to upsert the data (insert or update)
-                    response = supabase.table('leetcode_questions').upsert(data).execute()
+                    
+                    # CHANGED: Using insert instead of upsert to maintain history
+                    response = supabase.table('leetcode_questions').insert(data).execute()
+                    print(f"Added new entry for {problem_name} with commit date: {commit_date}")
                 else:
-                    print(f"No update required for {problem_name}.")
+                    # CHANGED: Updated message to be more specific
+                    print(f"Entry already exists for {problem_name} with commit date: {commit_date}")
 
-
-# Run the parser and updater
-parse_and_update('.')  # If running locally specify the path, in GitHub Actions the current directory is the root of the repository.
+# No changes in script execution
+parse_and_update('.')
