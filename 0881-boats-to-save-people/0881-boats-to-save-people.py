@@ -7,16 +7,14 @@ class Solution:
         while people[r] == limit and r > l:
                 r-=1
                 cnt+=1
-        print(people)
-        while l <= r:
-            if l==r:
-                cnt+=1
-                break
+
+        while l < r:
             if people[l] + people[r] <= limit:
                 l+=1
             r-=1
             cnt+=1
-            print([people[l],people[r],cnt])
+        if l==r:
+            cnt+=1
 
 
         return cnt
