@@ -1,34 +1,15 @@
-from collections import Counter
-class Solution(object):
-    def checkInclusion(self, s1, s2):
-        """
-        :type s1: str
-        :type s2: str
-        :rtype: bool
-        """
-        # hmap = {}
-        # for i in s1:
-        #     if i in hmap:
-        #         hmap[i] +=1
-        #     else:
-        #         hmap[i] =1
-        # # l = 0
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        h1 = defaultdict(int)
+        for i in range(len(s1)):
+            h1[s1[i]] += 1
 
-        # for l in range(0,len(s2)-len(s1)+1):
-        #     hm = {}
-        #     while l < len(s2) and s2[l] in s1:
-        #         if s2[l] in hm:
-        #             hm[s2[l]] +=1
-        #         else:
-        #             hm[s2[l]] = 1
-        #         if hm == hmap:
-        #             return True
-        #         elif hm[s2[l]] > hmap[s2[l]]:
-        #             break
-        #         l+=1
-        # return False
+        for r in range(0,len(s2)-len(s1)+1):
+            if s2[r] in h1:
+                if Counter(s2[r:r+len(s1)]) == h1:
+                    return True
+        
+        return False
 
-        for i in range(0,len(s2)-len(s1)+1):
-            if sorted(s2[i:i+len(s1)]) == sorted(s1):
-                return True
-        return False   
+
+
