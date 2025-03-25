@@ -1,28 +1,13 @@
-class Solution(object):
-    def pivotIndex(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        
-        prefix = []
-        total = 0
+class Solution:
+    def pivotIndex(self, nums: List[int]) -> int:
+        prefix = [0] * (len(nums)+1)
+        curr = 0 
+        for p in range(len(nums)):
+            curr += nums[p]
+            prefix[p+1] = curr
+        print(prefix)
 
-        for i in nums:
-            total += i
-            prefix.append(total)
-        
-        R = len(nums) - 1
         for i in range(len(nums)):
-            
-            if i < 1:
-                left = 0
-            else:
-                left = prefix[i-1]
-            L = i
-            right = prefix[R] - prefix[L]
-             
-            if left == right:
+            if prefix[i] == (prefix[-1] - prefix[i+1]):
                 return i
         return -1
-        
