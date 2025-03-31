@@ -1,18 +1,20 @@
-class Solution(object):
-    def isValid(self, s):
-        """
-        :type s: str
-        :rtype: bool
-        """
+class Solution:
+    def isValid(self, s: str) -> bool:
+        hmap =  {')' : '(',
+                ']' : '[',
+                '}' : '{'}
         stack = []
-        dict = {"]":"[", "}":"{", ")":"("}
-        for item in s:
-            if item in dict.values():
-                stack.append(item)
-            elif item in dict.keys():
-                if stack == [] or dict[item] != stack.pop():
+
+        for i in range(len(s)):
+            if s[i] in hmap:
+                if stack and stack[-1] == hmap[s[i]]:
+                    stack.pop()
+                else:
                     return False
             else:
-                return False
-        return stack == []
+                stack.append(s[i])
+            
+
+            
         
+        return False if stack else True
