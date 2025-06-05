@@ -1,59 +1,37 @@
 # Definition for singly-linked list.
-# class ListNode(object):
+# class ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
-class Solution(object):
-    def reorderList(self, head):
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
         """
-        :type head: Optional[ListNode]
-        :rtype: None Do not return anything, modify head in-place instead.
+        Do not return anything, modify head in-place instead.
         """
-        # curr = head
-        # arr = []
-
-        # while curr:
-        #     arr.append(curr)
-        #     curr = curr.next
-        
-        # l,r = 0, len(arr)-1
-        
-        # while l<r:
-        #     # if l == r:
-        #     #     # arr2.append(arr[l])
-        #     #     arr[l].next = arr[r]
-        #         # break
-        #     arr[l].next = arr[r]
-        #     l+=1
-        #     arr[r].next = arr[l]
-        #     r-=1
-        
-        # arr[l].next = None
-        
-
-        slow, fast = head, head
+        slow = head
+        fast = head.next
 
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
-        
+
         prev = None
-        
-        while slow:
-            tmp = slow.next
-            slow.next = prev
-            prev = slow
-            slow = tmp
-
-        curr = head
-
+        curr = slow.next
+        slow.next = None
         while curr:
-            tmp1 = curr.next
+            tmp = curr.next
             curr.next = prev
-            curr = tmp1
-            if curr == prev:
-                break
+            prev = curr
+            curr = tmp
+        
+        curr1 = head
+        while curr1 and prev:
+            tmp1 = curr1.next
             tmp2 = prev.next
-            prev.next = curr
+
+            curr1.next = prev
+            prev.next = tmp1
+
+            curr1 = tmp1
             prev = tmp2
-    
+        
