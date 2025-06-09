@@ -1,31 +1,27 @@
 # Definition for a binary tree node.
-# class TreeNode(object):
+# class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
-class Solution(object):
-    def rightSideView(self, root):
-        """
-        :type root: Optional[TreeNode]
-        :rtype: List[int]
-        """
-        
-        visited = set()
+class Solution:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         stack = [[root,0]]
         res = []
-        while stack:
-            print(visited)
-            node,dep = stack.pop()
+        visited = set()
 
-            if node and dep not in visited:
-                visited.add(dep)
-                res.append(node.val)
-                stack.append([node.left,dep+1])
-                stack.append([node.right,dep+1])
-            elif node and dep in visited:
-                stack.append([node.left,dep+1])
-                stack.append([node.right,dep+1])
+        while stack:
+            curr, lvl = stack.pop()
+            if curr and lvl not in visited:
+                visited.add(lvl)
+                res.append(curr.val)
+                stack.append([curr.left, lvl+1])
+                stack.append([curr.right, lvl+1])
+            elif curr and lvl in visited:
+                stack.append([curr.left, lvl+1])
+                stack.append([curr.right, lvl+1])
         
         return res
+
+
 
