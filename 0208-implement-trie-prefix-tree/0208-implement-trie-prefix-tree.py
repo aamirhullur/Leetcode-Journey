@@ -2,17 +2,13 @@ class TrieNode:
     def __init__(self):
         self.children = {}
         self.word = False
-
-class Trie(object):
+    
+class Trie:
 
     def __init__(self):
         self.root = TrieNode()
 
-    def insert(self, word):
-        """
-        :type word: str
-        :rtype: None
-        """
+    def insert(self, word: str) -> None:
         curr = self.root
         for c in word:
             if c not in curr.children:
@@ -20,32 +16,24 @@ class Trie(object):
             curr = curr.children[c]
         curr.word = True
 
-
-    def search(self, word):
-        """
-        :type word: str
-        :rtype: bool
-        """
+    def search(self, word: str) -> bool:
         curr = self.root
 
-        for c in word:
-            if c not in curr.children:
+        for w in word:
+            if w not in curr.children:
                 return False
-            curr = curr.children[c]
+            curr = curr.children[w]
         return curr.word
 
-    def startsWith(self, prefix):
-        """
-        :type prefix: str
-        :rtype: bool
-        """
-        curr= self.root
-
-        for c in prefix:
-            if c not in curr.children:
+    def startsWith(self, prefix: str) -> bool:
+        curr = self.root
+        
+        for p in prefix:
+            if p not in curr.children:
                 return False
-            curr = curr.children[c]
+            curr = curr.children[p]
         return True
+        
 
 
 # Your Trie object will be instantiated and called as such:
