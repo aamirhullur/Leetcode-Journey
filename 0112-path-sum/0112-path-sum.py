@@ -11,24 +11,15 @@ class Solution(object):
         :type targetSum: int
         :rtype: bool
         """
-
-        def bt(node,currSum):
+        
+        def dfs(node, currSum):
             if not node:
                 return False
-
             
             currSum += node.val
-
-            if not node.left and not node.right:
-                if currSum == targetSum:
-                    return True
-                else:
-                    currSum -= node.val
-                    return False
-
-            return bt(node.left,currSum) or bt(node.right,currSum)
+            if currSum == targetSum and not node.left and not node.right:
+                return True
+            
+            return (dfs(node.left,currSum) or dfs(node.right,currSum))
         
-        return bt(root,0)
-
-
-
+        return dfs(root,0)
