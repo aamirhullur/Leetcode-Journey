@@ -1,22 +1,19 @@
-class Solution(object):
-    def subsets(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
-        arr = []
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
-        def bt(i,arr):
-            if i >= len(nums):
-                res.append(list(arr))
+        def dfs(i,currStack):
+
+            if i == len(nums): 
+                res.append(list(currStack))
                 return
+                
+            currStack.append(nums[i])
+            dfs(i+1,currStack)
 
-            arr.append(nums[i])
-            bt(i+1, arr)
+            currStack.pop()
+            dfs(i+1,currStack)
 
-            arr.pop()
-            bt(i+1, arr)
 
-        bt(0,arr)
+        dfs(0,[])
 
         return res
