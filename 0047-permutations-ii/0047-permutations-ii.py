@@ -1,25 +1,22 @@
-class Solution(object):
-    def permuteUnique(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
         
-        # res = []
         res = set()
-
-        def bt(arr,visited):
-            if len(arr) == len(nums):
-                res.add(tuple(arr))
-
+        def bt(currArr,visited):
+            # print(currArr,visited)
+            if len(currArr) == len(nums):
+                res.add(tuple(currArr))
+                return
+            
             for i in range(len(nums)):
-                if i not in visited:
-                    visited.add(i)
-                    arr.append(nums[i])
-                    bt(arr,visited)
-                    visited.remove(i)
-                    arr.pop()    
+                if i in visited:
+                    continue
+                currArr.append(nums[i])
+                visited.add(i)
 
-        bt([],set())
+                bt(currArr,visited)
+                currArr.pop()
+                visited.discard(i)
 
-        return [list(i) for i in res]
+        bt([], set())
+        return [list(x) for x in res]
