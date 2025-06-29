@@ -1,22 +1,20 @@
-class Solution(object):
-    def permute(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: List[List[int]]
-        """
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
         
         res = []
-        
-        def bt(arr):
+        def dfs(arr,currArr):
             if len(arr) == len(nums):
                 res.append(list(arr))
-
-            for j in range(0,len(nums)):
-                if nums[j] not in arr:
-                    arr.append(nums[j])
-                    bt(arr)
-                    arr.pop()
+                return
             
+            for j in range(len(nums)):
+                if j in currArr:
+                    continue
+                arr.append(nums[j])
+                currArr.append(j)
+                dfs(arr,currArr)
+                arr.pop()
+                currArr.pop()
 
-        bt([])
-        return res
+        dfs([],[])
+        return(res)
