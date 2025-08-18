@@ -1,19 +1,14 @@
-class Solution(object):
-    def topKFrequent(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
-        temp = {}
-        for i,r in enumerate(nums):
-            if r in temp:
-                temp[r] += 1
-            else:
-                temp[r] = 1
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        countMap = Counter(nums)
 
-        res = dict(sorted(temp.items(), key = lambda x: x[1], reverse = True)[:k])
+        maxHeap = [(-v,k) for k,v in countMap.items()]
+        heapq.heapify(maxHeap)
+        res = []
+        while k:
+            val,key = heapq.heappop(maxHeap)
+            res.append(key)
+            k-=1
 
-        res1 = list(res.keys())
-
-        return(res1)
+        return res
