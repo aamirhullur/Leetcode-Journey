@@ -1,26 +1,42 @@
-def encode(strs):
-    # write your code here
-    stri = ""
-    for i,r in enumerate(strs):
-        length = len(r)
-        stri += str(length) + "#" + r
+class Codec:
+    def encode(self, strs: List[str]) -> str:
+        """Encodes a list of strings to a single string.
+        """
 
-    return(stri)
+        res = ''
 
-def decode(string):
-    new = ""
-    res = []
-    for i,r in enumerate(string):
-        if r.isdigit():
-            if string[i+1] != '#':
-                continue
-            else:
-                num = int(r)
-                res.append(string[i+2:i+2+num])
-    return res
+        for s in strs:
+            res += '#_#' + str(len(s)) + '#_#' + s
+        
+        return res
+
+    def decode(self, s: str) -> List[str]:
+        """Decodes a single string to a list of strings.
+        """
+        l = 0
+        res = []
+        n = len(s)
+        # print(s)
+        SEP = '#_#'
+        while l < n:
+            l += len(SEP)
+            r = l
+            while s[r:r+3] != SEP:
+                r+=1
+            # print(l,r)
+            # print(s[l:r])
+            length = s[l:r]
+            length = int(length)
+            r+=len(SEP)
+            l=r
+            r += length
+            res.append(s[l:r])
+            l = r
+        return res
+
+        
 
 
-
-a = encode(["leet11","code","love","you"])
-print(a)
-print(decode(a))
+# Your Codec object will be instantiated and called as such:
+# codec = Codec()
+# codec.decode(codec.encode(strs))
