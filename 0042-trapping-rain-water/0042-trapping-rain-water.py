@@ -7,12 +7,12 @@ class Solution:
 
         while l<r:
             if maxL < maxR:
-                l+=1
                 res += max((maxL - height[l]),0)
+                l+=1
                 maxL = max(height[l],maxL)
             else:
-                r-=1
                 res += max((maxR - height[r]),0)
+                r-=1
                 maxR = max(height[r],maxR)
         return res
     
