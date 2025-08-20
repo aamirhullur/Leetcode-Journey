@@ -1,27 +1,23 @@
-class Solution(object):
-    def lemonadeChange(self, bills):
-        """
-        :type bills: List[int]
-        :rtype: bool
-        """
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        five_bill, ten_bill = 0,0
+
+        for bill in bills:
+            if bill == 5:
+                five_bill += 1
+            elif bill == 10:
+                if five_bill:
+                    five_bill -= 1
+                    ten_bill += 1
+                else:
+                    return False
+            else:
+                if five_bill and ten_bill:
+                    five_bill -= 1
+                    ten_bill -= 1
+                elif five_bill >= 3:
+                    five_bill-=3
+                else:
+                    return False
         
-        d = {5:0,10:0,20:0}
-    
-        for i,r in enumerate(bills):
-            d[r] += 1
-    
-            if r == 10:
-                if d[5]:
-                    d[5] -= 1
-                else:
-                    return False
-            if r == 20:
-                if d[10] and d[5]:
-                    d[10]-=1
-                    d[5]-=1
-                elif d[5] > 2:
-                    d[5] -= 3
-                else:
-                    return False
-                
         return True
