@@ -1,30 +1,38 @@
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        len1, len2 = len(nums1), len(nums2)
+        total = len1+len2
+        i,j = 0,0
+        median = 0
+        target = total//2
+        cnt = 0
+
         
-        total = len(nums1) + len(nums2)
-        half = total // 2 
-
-        A, B = nums1, nums2
-        if len(B) < len(A):
-            A,B = B,A
-
-        l,r = 0, len(A)-1
-
-        while (1):
-            i = (l+r)//2
-            j = half - i - 2
-
-            Aleft = A[i] if i >= 0 else float('-inf')
-            Aright = A[i+1] if i+1 < len(A) else float('inf')
-            Bleft = B[j] if j >= 0 else float('-inf')
-            Bright = B[j+1] if j+1 < len(B) else float('inf')
-
-            if Aleft <= Bright and Bleft <= Aright:
-                if total % 2: 
-                    return min(Aright, Bright)
-                else:
-                    return (max(Aleft, Bleft) + min(Aright,Bright))/2
-            elif Aleft > Bright:
-                r = i-1
+        while cnt <= target and i<len1 and j<len2:
+            prevMedian = median
+            if nums1[i] < nums2[j]:
+                median = nums1[i]
+                i+=1
             else:
-                l=i+1
+                median = nums2[j]
+                j+=1
+            cnt += 1
+        
+        while cnt <= target and i < len1:
+            prevMedian = median
+            median = nums1[i]
+            i+=1
+            cnt+=1
+        
+        while cnt <= target and j < len2:
+            prevMedian = median
+            median = nums2[j]
+            j+=1
+            cnt+=1
+        
+        if total%2 == 0:
+            return (prevMedian+median)/2
+        else:
+            return median
+        
+                
