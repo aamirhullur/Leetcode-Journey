@@ -18,21 +18,20 @@ class Solution:
         if freq > rem+1:
             return ""
 
-        res = ""    
+        res = []   
 
         q = collections.deque()
         time = 1
         while maxHeap or q:
-            print(time,maxHeap)
             while q and q[0][0] == time:
                 t,c,val = q.popleft()
                 heapq.heappush(maxHeap,(c,val))
 
             cnt, s = heapq.heappop(maxHeap) # log(n)
-            res += s
+            res.append(s)
             cnt += 1
             if cnt:
                 q.append((time+2,cnt,s))
-            # heapq.heappush(maxHeap, (cnt,s)) # log(n)
+
             time += 1
-        return res
+        return ''.join(res)
