@@ -20,11 +20,8 @@ class Solution:
                 res.append(s)
                 return
             
-            for j in range(i,len(digits)):
-                for k in digit_to_letter[digits[j]]:
-                    s += k
-                    bt(j+1,s)
-                    s = s[:-1]
+            for k in digit_to_letter[digits[i]]:
+                bt(i+1,s+k)
 
         bt(0,"")
         return res
