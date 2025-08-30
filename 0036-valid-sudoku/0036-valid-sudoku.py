@@ -1,27 +1,21 @@
-class Solution(object):
-    def isValidSudoku(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: bool
-        """
-        square = collections.defaultdict(set)
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rowMap, colMap, squareMap = defaultdict(set), defaultdict(set), defaultdict(set)
 
-        for i in range(len(board)):
-            col = set()
-            row = set()
-            # square = set()
-            for j in range(len(board)):
-                if board[i][j] != '.':
-                    if board[i][j] in row:
+        ROWS, COLS = len(board), len(board[0])
+
+        for r in range(ROWS):
+            for c in range(COLS):
+                # print(board[r][c])
+                # print(rowMap)
+                # print(colMap)
+                # print(squareMap)
+                if board[r][c] != '.':
+                    if board[r][c] in rowMap[r] or board[r][c] in colMap[c] or board[r][c] in squareMap[(r//3,c//3)]:
                         return False
-                    row.add(board[i][j])
-                if board[j][i] != '.':
-                    if board[j][i] in col:
-                        return False
-                    col.add(board[j][i])
-                if board[i][j] != '.':
-                    if board[i][j] in square[(i//3,j//3)]:
-                        return False
-                    square[(i//3,j//3)].add(board[i][j])
+
+                    rowMap[r].add(board[r][c])
+                    colMap[c].add(board[r][c])
+                    squareMap[(r//3,c//3)].add(board[r][c])
 
         return True
